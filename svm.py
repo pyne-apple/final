@@ -62,7 +62,12 @@ def main():
 
         trainingLists = []
         for line in trainingFile:
-            splitValues = list(x for x in line.split())
+            splitValues = []
+            for i, x in enumerate(line.split()):
+                if (attributeList[i].type == "cont"):
+                    splitValues.append(float(x))
+                else:
+                    splitValues.append(int(x))
             trainingLists.append(splitValues)
 
         # print(trainingLists[:10])
