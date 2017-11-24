@@ -4,6 +4,7 @@ import general
 from sklearn import svm
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
+from sklearn.feature_selection import VarianceThreshold
 
 # python svm.py attr.txt train.txt
 def main():
@@ -15,19 +16,28 @@ def main():
     trainingFileName = sys.argv[2]
 
     attributeList, trainingAttrNPA, trainingClassNPA = general.getData(attributeFileName, trainingFileName)
+    
+    r_before, c_before = trainingAttrNPA.shape
+
+    # Find and remove attributes that aren't helpful
+    # Removes all features that are have one value (probably 0.0) in more than x% of the samples in the form (x * (1 - x))
+    featureSelection = VarianceThreshold(threshold=(.99 * (1 - .99)))
+    # Note, this doesn't also remove the columns in attributeList, so don't use attributeList after this
+    # consider removing attributeList from the general.getData() return tuple
+    trainingAttrNPA = featureSelection.fit_transform(trainingAttrNPA)
+    
+    r_after, c_after = trainingAttrNPA.shape
+    print("Columns removed: " + str(c_before - c_after) + " / " + str(c_before) + " = " + str(float(c_before - c_after)/float(c_before)) + "%")
 
     # Split into training and test
-    attr_train, attr_test, class_train, class_test = train_test_split(
-        trainingAttrNPA, trainingClassNPA, test_size=0.33)
+    # attr_train, attr_test, class_train, class_test = train_test_split(
+    #     trainingAttrNPA, trainingClassNPA, test_size=0.33)
 
-    # print(attr_train)
-    # print() 
-    # print(attr_test)
-    # print() 
-    # print(class_train)
-    # print() 
-    # print(class_test)
-    # print()
+    # Test split
+    # print(attr_train.shape)
+    # print(attr_test.shape)
+    # print(class_train.shape)
+    # print(class_test.shape)
 
     # classifier = svm.SVC(kernel='linear', C=1.0)
     # classifier.fit(attr_train, class_train)
