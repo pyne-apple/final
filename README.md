@@ -1,6 +1,7 @@
 Programming team:
 John Bales
 Priyanka Parekh
+Andrew Berry
 
 Compilation instructions:
 - run in python3

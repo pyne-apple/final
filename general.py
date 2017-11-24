@@ -1,4 +1,4 @@
-
+import numpy as np
 
 class attribute():
     def __init__(self):
@@ -16,7 +16,7 @@ class attribute():
         print("], Offset:", self.offset)
         pass
 
-# returns tuple (attributeList, trainingLists)
+# returns tuple (attributeList, trainingAttrNPA, trainingClassNPA)
 def getData(attributeFileName, trainingFileName):
     # Reading in data from training file
     with open(trainingFileName) as trainingFile, open(attributeFileName) as attributeFile:
@@ -52,16 +52,30 @@ def getData(attributeFileName, trainingFileName):
         # for attr in attributeList:
         #     attr.print()
 
-        trainingLists = []
+        trainingAttrLists = []
+        trainingClassList = []
         for line in trainingFile:
             splitValues = []
             for i, x in enumerate(line.split()):
-                if (attributeList[i].type == "cont"):
+                # If class value
+                if (attributeList[i].name == "Class"):
+                    trainingClassList.append(int(x))
+                # If floating point attribute
+                elif (attributeList[i].type == "cont"):
                     splitValues.append(float(x))
+                # If integer attribute
                 else:
                     splitValues.append(int(x))
-            trainingLists.append(splitValues)
+            trainingAttrLists.append(splitValues)
 
-        # print(trainingLists[:10])
+        # print(trainingAttrLists[:10])
 
-    return (attributeList, trainingLists)
+        # Convert to numpy arrarys
+        trainingAttrNPA = np.array(trainingAttrLists)
+        trainingClassNPA = np.array(trainingClassList)
+
+        # print(trainingAttrNPA)
+        # print(trainingClassNPA)
+        # print(trainingAttrNPA.tolist())
+
+    return (attributeList, trainingAttrNPA, trainingClassNPA)
