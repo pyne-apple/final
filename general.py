@@ -23,7 +23,6 @@ def getData(attributeFileName, trainingFileName):
         attributeList = []  # List of attribute objects
         for line in attributeFile:
             newAttr = attribute()
-
             splitValues = line.rstrip(" .\n").split()
             attrName = splitValues[0]
             attrVal1 = splitValues[1]
@@ -49,8 +48,8 @@ def getData(attributeFileName, trainingFileName):
             attributeList.append(newAttr)
 
         # Check attributes where read correctly
-        # for attr in attributeList:
-        #     attr.print()
+        #for attr in attributeList:
+        #    attr.print()
 
         trainingAttrLists = []
         trainingClassList = []
@@ -68,7 +67,7 @@ def getData(attributeFileName, trainingFileName):
                     splitValues.append(int(x))
             trainingAttrLists.append(splitValues)
 
-        # print(trainingAttrLists[:10])
+        #print(trainingAttrLists[:10])
 
         # Convert to numpy arrarys
         trainingAttrNPA = np.array(trainingAttrLists)
