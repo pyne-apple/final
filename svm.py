@@ -69,7 +69,10 @@ def main():
     #classifier = MLPClassifier(solver='sgd', alpha=1e-5, hidden_layer_sizes=(5,),random_state=1) #70-72%
     classifier = MLPClassifier(solver='adam', alpha=1e-5, hidden_layer_sizes=(130,), random_state=1) #71-72% (highest so far)
     #classifier = SGDClassifier(loss="perceptron", penalty="elasticnet") #64%
-    classifier.fit(attr_train, class_train)
+    # classifier.fit(attr_train, class_train)
+
+    # Train with full data
+    classifier.fit(trainingAttrNPA, trainingClassNPA)
 
     # predictions = classifier.predict(attr_test)
     #print(len(predictions), len(attr_test))
