@@ -9,8 +9,8 @@ from sklearn import preprocessing
 
 # python svm.py attr.txt train.txt prelim.txt
 def main():
-    if len(sys.argv) < 3:
-        print("Please execute with 2 arguments <Attribute File> <Training File> <Predict File>")
+    if len(sys.argv) != 4:
+        print("Please execute with 3 arguments <Attribute File> <Training File> <Predict File>")
         exit()
 
     attributeFileName = sys.argv[1]
@@ -28,7 +28,7 @@ def main():
     if predictFileName:
         _, predictAttrNPA, _ = general.getData(
             attributeFileName, predictFileName)
-        predictAttrNPA = min_max_scaler.fit_transform(predictAttrNPA)
+        predictAttrNPA = min_max_scaler.transform(predictAttrNPA)
 
     # Find and remove attributes that aren't helpful
     # Removes all features that are have one value (probably 0.0) in more than x% of the samples in the form (x * (1 - x))
